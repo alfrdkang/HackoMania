@@ -3,15 +3,20 @@ import datetime
 import json
 import asyncio
 import aiohttp
+import dotenv
+import os
 from random import randint
 
+dotenv.load_dotenv()
+
 async def get_data_async(date: str):
+    auth = os.getenv("auth")
     url = "https://c-api-gateway.tkg.spdigital.io/skalbox/api"
     headers = {"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0",
                "Accept": "application/json, text/plain, */*",
                "Accept-Language": "en-US,en;q=0.5",
                "Content-Type": "application/json",
-               "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5VSkZRMEpFUWpjeU9UWkRRek01UkRZeU56ZzJPRFE0TVRaRk5UazFPVUk0T0RSRVF6bEdPQSJ9.eyJodHRwczovL3NwZ3JvdXAuY29tLnNnL3VzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXRob2xhdkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Ik9uZyBNZWkgTGVuZyBZdm9ubmUiLCJudW1iZXIiOiI4NTAwMDIzMSIsImRpc3BsYXlfbmFtZSI6Im5hbWVsZXNzIiwicGhvbmVfdmVyaWZpZWQiOmZhbHNlfSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5zcGRpZ2l0YWwuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDViZTk0NTU1MjRiMzFkNzczMGFiMTE5OCIsImF1ZCI6WyJodHRwczovL3Byb2ZpbGUudXAuc3BkaWdpdGFsLnNnLyIsImh0dHBzOi8vaWRlbnRpdHkuc3BkaWdpdGFsLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE3MTI0MjgxMDUsImV4cCI6MTcxMjQzMTcwNSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBvZmZsaW5lX2FjY2VzcyBtZSIsImF6cCI6IjBJNlhwWFRoZWhJVTNTZ2FTYnpyYUNnZWtrSGcyckpIIn0.6Z03GbAp6z7cBEXulMvdEARWcct5PSWWEmlv7RFAna9AFfHxUb1hEfKKB-fHnPq11T51x7dktwXTiJ92ao8WJ97H5VdREOgVN5tx9jSNc2AwGYd6yKnOdQrZGguMy0vKxv23zWqvHID7_x78QMOYke51wWk6A7qokeOprcFgnE8y2uebed7_soSxRFVEfgV5lhNz-nK01ddDiNCY8d71Igdd4shGb3dZvI-bWJwGovqb1Fv4z-4rYQT117GvDV2buTYOjSbJRf4LV_xQ2pQCDv66jCCAUQZbmrUfR4OFwpqhF6Z_TEwDga5hFBTvbl6qgCyaj-z6IkaS38S3_Z5JBA"
+               "Authorization": auth
                }
     payload = {"charts:hourly": {"accountNos": ["8941355284"], "date": date}}
     async with aiohttp.ClientSession() as session:
